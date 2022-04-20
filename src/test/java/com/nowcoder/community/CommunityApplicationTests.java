@@ -87,4 +87,9 @@ private ApplicationContext applicationContext;
 
 		System.out.println(discussPostMapper.selectDate(277));
 	}
+
+	@Test
+	public void selectid(int id){
+
+	}
 }
