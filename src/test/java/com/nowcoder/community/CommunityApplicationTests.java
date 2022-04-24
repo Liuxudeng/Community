@@ -82,11 +82,11 @@ private ApplicationContext applicationContext;
 		}
 	}
 
-	@Test
-	public void selectDate(){
-
-		System.out.println(discussPostMapper.selectDate(277));
-	}
+//	@Test
+//	public void selectDate(){
+//
+//		System.out.println(discussPostMapper.selectDate(277));
+//	}
 
 	@Test
 	public void selectid(int id){

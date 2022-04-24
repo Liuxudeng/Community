@@ -11,7 +11,7 @@ public interface DiscussPostMapper {
    List<DiscussPost> selectDiscussPosts(int user_id,int offset, int limit);
     int selectDiscussPostRows(int user_id);
 
-    Date selectDate(int id);
+
 
 
 
