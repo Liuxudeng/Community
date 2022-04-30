@@ -11,7 +11,11 @@ public interface DiscussPostMapper {
    List<DiscussPost> selectDiscussPosts(int user_id,int offset, int limit);
     int selectDiscussPostRows(int user_id);
 
+    int insertDiscussPost(DiscussPost discussPost);
 
+    DiscussPost selectDiscussPostById(int id);
+
+    int updateCommentCount(int id, int commentCount);
 
 
 
