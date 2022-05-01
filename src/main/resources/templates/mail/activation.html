@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!doctype html>
 <html lang="en">
 <head>
@@ -17,4 +18,25 @@
 		</p>
 	</div>
 </body>
+=======
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="https://static.nowcoder.com/images/logo_87_87.png"/>
+    <title>牛客网-激活账号</title>
+</head>
+<body>
+	<div>
+		<p>
+			<b th:text="${email}">xxx@xxx.com</b>, 您好!
+		</p>
+		<p>
+			您正在注册牛客网, 这是一封激活邮件, 请点击 
+			<a th:href="${url}">此链接</a>,
+			激活您的牛客账号!
+		</p>
+	</div>
+</body>
+>>>>>>> 4175b6f9ff52e242ec0c9f39bf254a8b79ef3635
 </html>
