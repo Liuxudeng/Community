@@ -3,7 +3,13 @@ package com.nowcoder.community.controller;
 
 import com.nowcoder.community.dao.CommentMapper;
 import com.nowcoder.community.entity.Comment;
+import com.nowcoder.community.entity.DiscussPost;
+import com.nowcoder.community.entity.Event;
+import com.nowcoder.community.event.EventConsumer;
+import com.nowcoder.community.event.EventProducer;
 import com.nowcoder.community.service.CommentService;
+import com.nowcoder.community.service.DiscussPostService;
+import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,25 +21,60 @@ import java.util.Date;
 
 @Controller
 @RequestMapping("/comment")
-public class CommentController {
+public class CommentController implements CommunityConstant {
     @Autowired
     private CommentService commentService;
     @Autowired
     private HostHolder hostHolder;
 
+    @Autowired
+    private EventProducer eventProducer;
+
+    @Autowired
+    private DiscussPostService discussPostService;
+
 
     @RequestMapping(path="/add/{discussPostId}", method = RequestMethod.POST)
     public String addComment(@PathVariable("discussPostId") int discussPostId, Comment comment){
        // return "redirect:/discuss/detail"+discussPostId;
-        System.out.println("--------------------"+new Date());
+
         comment.setUserId(hostHolder.getUser().getId());
-        System.out.println("--------------------"+new Date());
+
 
         comment.setStatus(0);
         comment.setCreateTime(new Date());
-        System.out.println("--------------------"+new Date());
+
         commentService.addComment(comment);
-        System.out.println("--------------------"+new Date());
+
+
+        /**
+         * 触发评论系统事件
+         */
+//        Event event = new Event()
+//                .setTopic(TOPIC_COMMENT)
+//                .setUserId(hostHolder.getUser().getId())
+//                .setEntityType(comment.getEntityType())
+//                .setEntityId(comment.getEntityId())
+//                .setData("postId",discussPostId);
+
+
+        Event event = new Event()
+                .setTopic(TOPIC_COMMENT)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(comment.getEntityType())
+                .setEntityId(comment.getEntityId())
+                .setData("postId", discussPostId);
+
+
+        if (comment.getEntityType() == ENTITY_TYPE_POST) {
+            DiscussPost target = discussPostService.findDiscussPostById(comment.getEntityId());
+            event.setEntityUserId(target.getUserId());
+        } else if (comment.getEntityType() == ENTITY_TYPE_COMMENT) {
+            Comment target = commentService.findCommentById(comment.getEntityId());
+            event.setEntityUserId(target.getUserId());
+        }
+        eventProducer.fireEvent(event);
+
         return "redirect:/discuss/detail/"+discussPostId;
 
     }

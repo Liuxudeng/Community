@@ -6,7 +6,8 @@ import com.nowcoder.CommunityApplication;
 import com.nowcoder.community.dao.*;
 import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.User;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,38 +31,7 @@ private ApplicationContext applicationContext;
 			this.applicationContext = applicationContext;
 	}
 
-	@Test
-	public void testApplicationContext(){
-		System.out.println(applicationContext);
-		AlphaDao alphaDao = applicationContext.getBean(AlphaDaoHibernateImpl.class);
-		System.out.println(alphaDao.select());
-		System.out.println("------------");
-		AlphaDao alphaDao1 = applicationContext.getBean(AlphaDaoMybatisImpl.class);
-		System.out.println(alphaDao1.select());
 
-		System.out.println("-------------");
-		AlphaDao alphaDao2 = applicationContext.getBean("mybatis",AlphaDao.class);
-		System.out.println(alphaDao2.select());
-		System.out.println("-----------");
-		AlphaDao alphaDao3 = applicationContext.getBean("hibernate",AlphaDao.class);
-		System.out.println(alphaDao3.select());
-
-
-	//	applicationContext.getBean()
-	}
-
-
-
-
-
-	@Qualifier("mybatis")
-	@Autowired
-	private AlphaDao alphaDao;
-	@Test
-	public void test03(){
-		System.out.println(alphaDao.select());
-
-	}
 
 @Autowired
 	UserMapper userMapper;
