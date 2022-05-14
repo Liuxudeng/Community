@@ -50,7 +50,7 @@ class KafkaProducer{
 
 @Component
 class KafkaConsumer{
-  @KafkaListener(topics = "{test2}")
+  @KafkaListener(topics = {"test2"})
     public void handleMessage(ConsumerRecord record){
       System.out.println(record.value());
     }
