@@ -72,5 +72,17 @@ public class HomeContoller {
     }
 
 
+    /**
+     * 权限不足提示页面
+     */
+    @RequestMapping(path = "/denied",method = RequestMethod.GET)
+    public String getDeniedPage(){
+
+
+       return "/error/404";
+
+    }
+
+
 
 }
