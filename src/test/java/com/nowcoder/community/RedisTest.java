@@ -72,4 +72,31 @@ public class RedisTest {
         });
         System.out.println(obj);
     }
+
+
+    /**
+     * 统计20万个数据的独立总数
+     */
+
+    @Test
+    public void testHyberLoglog(){
+
+        String redisKey = "test:h1:02";
+        for (int i = 0; i < 1000; i++) {
+            redisTemplate.opsForHyperLogLog().add(redisKey,i);
+
+        }
+
+        for (int i = 0; i < 1000; i++) {
+
+            int r = (int)(Math.random()*1000+1);
+            redisTemplate.opsForHyperLogLog().add(redisKey,r);
+
+        }
+
+        Long size = redisTemplate.opsForHyperLogLog().size(redisKey);
+
+        System.out.println(size);
+
+    }
 }
