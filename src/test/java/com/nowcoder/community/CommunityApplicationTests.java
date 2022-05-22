@@ -46,7 +46,7 @@ private ApplicationContext applicationContext;
 	DiscussPostMapper discussPostMapper;
 	@Test
 	public void selectDiscussPost(){
-		List<DiscussPost> discussPosts = discussPostMapper.selectDiscussPosts(101, 0, 10);
+		List<DiscussPost> discussPosts = discussPostMapper.selectDiscussPosts(101, 0, 10,0);
 		for (int i = 0; i < 10; i++) {
 
 			System.out.println("第"+i+"行---"+discussPosts.get(i).toString());

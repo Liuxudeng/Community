@@ -32,7 +32,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
         http.authorizeRequests()
                 .antMatchers(
                         "/user/setting",
+
                         "/user/upload",
+                        "/header/url",
                         "/discuss/add",
                         "/comment/add/**",
                         "/letter/**",
@@ -51,10 +53,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                         "/discuss/delete")
                 .hasAnyAuthority(AUTHORITY_MODERATOR)
                 .antMatchers("/discuss/delete",
-                        "/data/**")
+                        "/data/**","/actuator/**")
                 .hasAnyAuthority(AUTHORITY_ADMIN)
                 .anyRequest().permitAll()
-                .and().csrf().disable();
+               .and().csrf().disable();
 
         //权限不够用时的处理
         http.exceptionHandling()
