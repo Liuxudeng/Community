@@ -35,6 +35,8 @@ import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
+ *
+ * 消费者类
  * 将该bean注入到like follow comment中
  */
 @Component
@@ -74,7 +76,9 @@ private String wkImageCommand;
     @Autowired
     private ThreadPoolTaskScheduler taskScheduler;
 
-
+    /**
+     * 对三个主题进行监听 TOPIC_COMMENT,TOPIC_LIKE,TOPIC_FOLLOW
+     */
     @KafkaListener(topics ={TOPIC_COMMENT,TOPIC_LIKE,TOPIC_FOLLOW})
       public void handleCommentMessage(ConsumerRecord record){
         if(record==null||record.value()==null){

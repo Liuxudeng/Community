@@ -5,6 +5,9 @@ import com.nowcoder.community.entity.LoginTicket;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 @Deprecated
+/**
+ * 将登录凭证的数据在数据库中插入 查找 修改 开始先把这些数据存入mysql 之后存入redis
+ */
 @Mapper
 public interface LoginTicketMapper {
 

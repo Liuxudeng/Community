@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class HostHolder {
 
+    /**
+     * 考虑多线程的情况 在这里把users存入ThreadLocal中
+     */
     private ThreadLocal<User> users = new ThreadLocal<>();
 
     public void setUser(User user) {

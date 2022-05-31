@@ -99,4 +99,18 @@ public class RedisTest {
         System.out.println(size);
 
     }
+
+
+    @Test
+    public void test0529(){
+
+       String rediskey = "test0529";
+//        redisTemplate.opsForValue().set (rediskey,"666");
+//      //  System.out.println(redisTemplate.opsForValue().get(rediskey));
+//        System.out.println(redisTemplate.opsForValue().getClass());
+//        System.out.println( redisTemplate.opsForValue().get ("test0529"));
+redisTemplate.delete(rediskey);
+        System.out.println( redisTemplate.opsForValue().get ("test0529"));
+
+    }
 }

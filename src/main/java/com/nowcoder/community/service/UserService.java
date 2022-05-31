@@ -18,13 +18,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import sun.security.krb5.internal.PAForUserEnc;
+
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static com.nowcoder.community.util.CommunityConstant.*;
 
+/**
+ * 用户相关操作类
+ */
 @Service
 public class UserService implements CommunityConstant {
     @Autowired
@@ -63,7 +66,11 @@ public class UserService implements CommunityConstant {
 
     }
 
-
+    /**
+     * 注册方法
+     * @param user
+     * @return
+     */
     public Map<String,Object> register(User user){
         Map<String,Object> map = new HashMap<>();
         /**
@@ -110,6 +117,9 @@ public class UserService implements CommunityConstant {
 
         /**
          * 注册用户
+         */
+        /**
+         * 设置一个通过随机数生成的盐值
          */
         user.setSalt(CommunityUtil.generateUUID().substring(0, 5));
         user.setPassword(CommunityUtil.md5(user.getPassword() + user.getSalt()));
@@ -227,6 +237,11 @@ public class UserService implements CommunityConstant {
 //        loginTicketMapper.insertLoginTicket(loginTicket);
         String redisKey = RedisKeyUtil.getTicketKey(loginTicket.getTicket());
 
+
+        /**
+         * redisKey部分存储的主要是是一个变化的uuid
+         * loginTicket存储的是多个参数
+         */
         redisTemplate.opsForValue().set(redisKey,loginTicket);
 
 

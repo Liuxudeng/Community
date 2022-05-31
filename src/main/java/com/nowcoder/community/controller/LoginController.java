@@ -113,7 +113,9 @@ public class LoginController implements CommunityConstant {
          * 设置cookie
          */
         Cookie cookie = new Cookie("kaptchaOwner",kaptchaOwner);
+        //设置cookie过期时间
         cookie.setMaxAge(60);
+        //设置cookie有效路径
         cookie.setPath(contextPath);
         response.addCookie(cookie);
 
@@ -143,7 +145,7 @@ public class LoginController implements CommunityConstant {
 
     @RequestMapping(path = "/login",method = RequestMethod.POST)
     public String login(String username,String password,String code, boolean remeber,
-                        Model model, HttpSession session, HttpServletResponse response,
+                        Model model, HttpServletResponse response,
                         @CookieValue("kaptchaOwner") String kaptchaOwner){
        // String kaptcha =(String) session.getAttribute("kaptcha");
         String kaptcha = null;
@@ -175,8 +177,6 @@ public class LoginController implements CommunityConstant {
             cookie.setMaxAge(expiredSeconds);
 
             response.addCookie(cookie);
-
-
 
             return "redirect:/index";
 

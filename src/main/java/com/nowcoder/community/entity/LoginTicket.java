@@ -3,6 +3,9 @@ package com.nowcoder.community.entity;
 import java.util.Date;
 import java.util.PrimitiveIterator;
 
+/**
+ * 登录凭证
+ */
 public class LoginTicket {
 
     private int id;
