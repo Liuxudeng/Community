@@ -136,18 +136,18 @@ public class SensitiveFilter {
          * 如果不为空，声明三个变量
          */
         /**
-         * 指针1
+         * 指针1 指向根节点
          *
          */
 
         TrieNode tempNode = rootNode;
         /**
-         * 指针2
+         * 指针2 ，第二个指针指向字符串起始位置
          */
 
         int begin = 0;
         /**
-         * 指针3
+         * 指针3 在指针2发现敏感词后向后遍历
          */
         int position = 0;
 
@@ -159,14 +159,14 @@ public class SensitiveFilter {
 
         while(position<text.length()){
             char c = text.charAt(position);
-            //跳过符号
+            //  如果是特殊符号，那么跳过符号
             if(isSymbol(c)){
-                //若指针1处于根节点,将此符号计入结果，让指针2向下走一步
+                //并且特殊字符出现在根节点位置,将此符号计入结果，让指针2向下走一步
                 if(tempNode==rootNode){
                     sb.append(c);
                     begin++;
                 }
-                //无论符号在开头还是中间，指针3都向下走一步
+                //无论特殊符号在开头还是中间，指针3都向下走一步
                 position++;
                 continue;
 
@@ -179,23 +179,23 @@ public class SensitiveFilter {
 
             tempNode = tempNode.getSubNode(c);
             if(tempNode==null){
-                //如果以begin开头的字符串不是敏感词
+                //tempnode为空说明在begin和position之间的字符串不是敏感词,
                 sb.append(text.charAt(begin));
-                //进入下一个位置
+                // 如果以begin开头的字符串不是敏感词,从begin+1开始继续检查
               position= ++begin;
 
                 // 重新指向根节点
                 tempNode = rootNode;
 
             }else if(tempNode.isKeywordEnd()){
-                 //发现敏感词
+                 //发现begin和position之间的是敏感词 把敏感词替换为***
                 sb.append(REPLACEMENT);
-                //进入下一个位置
+                //在吧第二个指针 第三个指针指向position+1
                 begin = ++position;
                 //重新指向根节点
                 tempNode = rootNode;
             }else {
-                //检查下一个字符
+                //处于检查中状态，父节点匹配完了，继续在前缀树中向下检查下一个字符
                 if(position<text.length()-1){
                     position++;
                 }
