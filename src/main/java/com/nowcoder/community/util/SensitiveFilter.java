@@ -15,6 +15,9 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 敏感词过滤操作类
+ */
 
 @Component
 public class SensitiveFilter {
@@ -53,7 +56,7 @@ public class SensitiveFilter {
 
 
     /**
-     * 将敏感词天机阿道前缀树中
+     * 将敏感词添加到前缀树中
      */
     private void addKeyword(String keyword){
         TrieNode tempNode = rootNode;
