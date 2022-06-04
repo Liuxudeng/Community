@@ -8,27 +8,28 @@ import java.util.Map;
  */
 public class Event {
     /**
-     * 主题
+     * 存放消息的主题
      */
     private String topic;
     /**
-     * 事件触发的人
+     * 触发事件的用户Id
      */
     private int userId;
     /**
-     * 实体类型
+     * 实体Id
+     *
      */
     private int entityId;
     /**
-     * 实体Id
+     * 实体类型
      */
     private int entityType;
     /**
-     * 实体作者
+     * 实体所有者Id
      */
     private int entityUserId;
     /**
-     * 未知类型数据存入 增加扩展性
+     * 未知类型数据存入 增加扩展性 这里一般存消息内容
      */
     private Map<String,Object> data = new HashMap<>();
 

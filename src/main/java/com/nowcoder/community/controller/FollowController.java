@@ -38,12 +38,12 @@ public class FollowController implements CommunityConstant {
     @RequestMapping(path="/follow",method= RequestMethod.POST)
     @ResponseBody
 
-    public String follw(int entityType, int entityId){
+    public String follow(int entityType, int entityId){
 
 
         User user = hostHolder.getUser();
         followService.follow(user.getId(), entityType,entityId);
-        //触发关注时间
+        //触发关注事件  发送系统消息给被关注用户 告知他有新增粉丝
         Event event = new Event()
                 .setTopic(TOPIC_FOLLOW)
                 .setUserId(hostHolder.getUser().getId())
@@ -63,7 +63,7 @@ public class FollowController implements CommunityConstant {
     @RequestMapping(path="/unfollow",method= RequestMethod.POST)
     @ResponseBody
 
-    public String unfollw(int entityType, int entityId){
+    public String unfollow(int entityType, int entityId){
 
 
         User user = hostHolder.getUser();
@@ -75,7 +75,13 @@ public class FollowController implements CommunityConstant {
     }
 
 
-
+    /**
+     * 某个用户关注的人
+     * @param userId
+     * @param page
+     * @param model
+     * @return 返回另一个网页
+     */
     @RequestMapping(path = "/followees/{userId}", method = RequestMethod.GET)
     public String getFollowees(@PathVariable("userId") int userId, Page page, Model model) {
         User user = userService.findUserById(userId);
@@ -89,6 +95,7 @@ public class FollowController implements CommunityConstant {
         page.setRows((int) followService.findFolloweeCount(userId, ENTITY_TYPE_USER));
 
         List<Map<String, Object>> userList = followService.findFollowees(userId, page.getOffset(), page.getLimit());
+        //在此判断userList中的元素是否都被关注userId
         if (userList != null) {
             for (Map<String, Object> map : userList) {
                 User u = (User) map.get("user");
@@ -97,7 +104,7 @@ public class FollowController implements CommunityConstant {
         }
         model.addAttribute("users", userList);
 
-        return "/site/followee";
+        return  "/site/followee";
     }
 
     @RequestMapping(path = "/followers/{userId}", method = RequestMethod.GET)

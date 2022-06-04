@@ -52,9 +52,7 @@ public class CommentController implements CommunityConstant {
         commentService.addComment(comment);
 
 
-        /**
-         * 触发评论系统事件
-         */
+
 //        Event event = new Event()
 //                .setTopic(TOPIC_COMMENT)
 //                .setUserId(hostHolder.getUser().getId())
@@ -62,7 +60,9 @@ public class CommentController implements CommunityConstant {
 //                .setEntityId(comment.getEntityId())
 //                .setData("postId",discussPostId);
 
-
+        /**
+         * 触发评论系统事件
+         */
         Event event = new Event()
                 .setTopic(TOPIC_COMMENT)
                 .setUserId(hostHolder.getUser().getId())
@@ -85,7 +85,7 @@ public class CommentController implements CommunityConstant {
          */
         if(comment.getEntityType()==ENTITY_TYPE_POST){
 
-            //触发发帖事件
+            //触发发帖事件 将评论的更新数据同步值Es服务器
             event = new Event()
                     .setTopic(TOPIC_PUBLISH)
                     .setUserId(comment.getUserId())

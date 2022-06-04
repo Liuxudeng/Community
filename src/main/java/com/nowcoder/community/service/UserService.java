@@ -53,10 +53,13 @@ public class UserService implements CommunityConstant {
 
     public User findUserById(int id){
        // return userMapper.selectById(id);
+        /**
+         * 先从redis的cache中找用户
+         */
 
         User user = getCache(id);
         /**
-         * 先从redis的cache中找用户，如果没有就初始化
+         * 如果redis中没有缓存 那么就在redis中初始化
          */
         if(user==null){
           user  =initCache(id);
@@ -315,7 +318,7 @@ public class UserService implements CommunityConstant {
     /**
      * 如果拿不到缓存
      * @param userId 根据userId初始化缓存
-     * @return
+     * @return 返回User类
      */
     private User initCache(int userId){
         User user = userMapper.selectById(userId);
@@ -326,7 +329,7 @@ public class UserService implements CommunityConstant {
     }
 
     /**
-     * 数据变更时清楚缓存
+     * 数据变更时清除缓存
      * @param userId
      */
     private void clearCache(int userId){

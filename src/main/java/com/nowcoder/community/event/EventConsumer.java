@@ -78,6 +78,8 @@ private String wkImageCommand;
 
     /**
      * 对三个主题进行监听 TOPIC_COMMENT,TOPIC_LIKE,TOPIC_FOLLOW
+     * 收到这三个event后就构建message对象
+     *
      */
     @KafkaListener(topics ={TOPIC_COMMENT,TOPIC_LIKE,TOPIC_FOLLOW})
       public void handleCommentMessage(ConsumerRecord record){
@@ -108,8 +110,10 @@ private String wkImageCommand;
 
         // 发送站内通知
         Message message = new Message();
+        //消息发送方的ID为1 表示是有系统发送的消息
         message.setFromId(SYSTEM_USER_ID);
         message.setToId(event.getEntityUserId());
+        //conversationId设为topic
         message.setConversationId(event.getTopic());
         message.setCreateTime(new Date());
 
@@ -124,6 +128,7 @@ private String wkImageCommand;
             }
         }
 
+        //把content保存为json字符串
         message.setContent(JSONObject.toJSONString(content));
         messageService.addMessage(message);
 
@@ -134,7 +139,7 @@ private String wkImageCommand;
 
 
     /**
-     * 消费发帖事件
+     * 消费者将新发的帖子更新到Es服务器中
      */
     @KafkaListener(topics = {TOPIC_PUBLISH})
     public void handlePublishMessage(ConsumerRecord record){

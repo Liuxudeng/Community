@@ -8,7 +8,7 @@ public class RedisKeyUtil {
         private static final String SPLIT = ":";
 
     /**
-     * 存实体（这里实体包括帖子、评论）
+     * 存实体（这里实体包括帖子、评论、点赞）
      */
     private static final String PREFIX_ENTITY_LIKE ="like:entity";
 
@@ -32,25 +32,31 @@ public class RedisKeyUtil {
     /**
      * 存储的格式：   like：entity:entityType:entityId  ->  set(userId)
      */
+    /**
+     * 本方法的参数是通过discuss.js传入
+     * @param entityType
+     * @param entityId
+     * @return 某个实体(帖子或回复)的赞的key值
+     */
 
     public static String getEntityLikeKey(int entityType, int entityId){
 
         return PREFIX_ENTITY_LIKE+SPLIT+entityType+SPLIT+entityId;
     }
 
-    // 某个用户的赞
+    // 某个用户收到的赞的个数
     // like:user:userId -> int
     public static String getUserLikeKey(int userId) {
         return PREFIX_USER_LIKE + SPLIT + userId;
     }
 
-    // 某个用户关注的实体
+    // 某个用户关注的实体  （关注数）
     // followee:userId:entityType -> zset(entityId,now)
     public static String getFolloweeKey(int userId, int entityType) {
         return PREFIX_FOLLOWEE + SPLIT + userId + SPLIT + entityType;
     }
 
-    // 某个实体拥有的粉丝
+    // 某个实体拥有的粉丝 （被关注数）
     // follower:entityType:entityId -> zset(userId,now)
     public static String getFollowerKey(int entityType, int entityId) {
         return PREFIX_FOLLOWER + SPLIT + entityType + SPLIT + entityId;

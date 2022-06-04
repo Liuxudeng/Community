@@ -49,12 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                         AUTHORITY_MODERATOR
                 )
                 .antMatchers("/discuss/top",
-                        "/discuss/wonderful",
-                        "/discuss/delete")
+                        "/discuss/wonderful")
                 .hasAnyAuthority(AUTHORITY_MODERATOR)
                 .antMatchers("/discuss/delete",
                         "/data/**","/actuator/**")
-                .hasAnyAuthority(AUTHORITY_ADMIN)
+                .hasAnyAuthority(AUTHORITY_MODERATOR,AUTHORITY_ADMIN)
                 .anyRequest().permitAll()
                .and().csrf().disable();
 

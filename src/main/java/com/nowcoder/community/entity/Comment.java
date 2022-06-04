@@ -2,10 +2,18 @@ package com.nowcoder.community.entity;
 
 import java.util.Date;
 
+/**
+ * 评论实体类
+ */
 public class Comment {
 
     private int id;
     private int userId;
+    /**
+     * entityType是表示目标的类别 1代表帖子 2代表评论
+     * entityId表示的是具体的目标 往id为多少的帖子评论
+     * targetId表示的是某个人的评论
+     */
     private int entityType;
     private int entityId;
     private int targetId;

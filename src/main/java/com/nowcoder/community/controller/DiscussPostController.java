@@ -64,7 +64,7 @@ public class DiscussPostController  implements CommunityConstant {
         post.setCreateTime(new Date());
         discussPostService.addDiscussPost(post);
 
-        //触发发帖事件
+        //触发发帖事件 使用kafka将数据更新至Es服务器
         Event event = new Event()
                 .setTopic(TOPIC_PUBLISH)
                 .setUserId(user.getId())

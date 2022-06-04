@@ -35,6 +35,15 @@ public class LikeController implements CommunityConstant {
     @Autowired
     private RedisTemplate redisTemplate;
 
+
+    /**
+     * 本方法的入参是通过discuss.js拿到对应的值在通过/like映射到本方法中
+     * @param entityType
+     * @param entityId
+     * @param entityUserId
+     * @param postId
+     * @return
+     */
     @RequestMapping(path = "/like", method = RequestMethod.POST)
     @ResponseBody
     public String like(int entityType, int entityId,int entityUserId,int postId) {
@@ -55,7 +64,7 @@ public class LikeController implements CommunityConstant {
         map.put("likeCount", likeCount);
         map.put("likeStatus", likeStatus);
 
-        //触发点赞时间
+        //触发点赞事件 这里会将点赞这个event发布到TOPIC_LIKE
         if(likeStatus==1){
             Event event = new Event()
                     .setTopic(TOPIC_LIKE)

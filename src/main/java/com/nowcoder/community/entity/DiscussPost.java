@@ -2,6 +2,9 @@
 
 
 package com.nowcoder.community.entity;
+/**
+ * 帖子实体类
+ */
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -129,7 +132,9 @@ import java.util.Date;
 //
 
 
-
+/**
+ * @Document注解是为了使elasticsearch能够识别，在Dao层加入
+ */
 @Document(indexName = "discusspost", type = "_doc", shards = 6, replicas = 3)
 public class DiscussPost {
 

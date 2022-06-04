@@ -2,12 +2,21 @@ package com.nowcoder.community.entity;
 
 import java.util.Date;
 
+/**
+ * 私信会话
+ */
 public class Message {
     private int id;
+    /**
+     * 发送消息方id fromId=1是系统消息
+     */
     private int fromId;
     private int toId;
     private String conversationId;
     private String content;
+    /**
+     * 消息的窗台 0表示未读 1表示已读 2表示删除
+     */
     private int status;
     private Date createTime;
 

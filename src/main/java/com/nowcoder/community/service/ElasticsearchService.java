@@ -69,11 +69,15 @@ public class ElasticsearchService {
          */
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(QueryBuilders.multiMatchQuery(keyword, "title", "content"))
+                //按帖子类型倒序排序
                 .withSort(SortBuilders.fieldSort("type").order(SortOrder.DESC))
+                //按分数倒序排序
                 .withSort(SortBuilders.fieldSort("score").order(SortOrder.DESC))
+                //按创建时间倒序
                 .withSort(SortBuilders.fieldSort("createTime").order(SortOrder.DESC))
                 .withPageable(PageRequest.of(current, limit))
                 .withHighlightFields(
+                        //高亮显示关键词
                         new HighlightBuilder.Field("title").preTags("<em>").postTags("</em>"),
                         new HighlightBuilder.Field("content").preTags("<em>").postTags("</em>")
                 ).build();

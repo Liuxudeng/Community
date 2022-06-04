@@ -21,6 +21,8 @@ public class EventProducer {
         //将事件发布到指定的主题
         /**
          * 这里的两个参数分别为发送的消息的topic 以及payload
+         *
+         * JSONObject.toJSONString()方法的作用是将jsonObject类型转化为json字符串
          */
         kafkaTemplate.send(event.getTopic(), JSONObject.toJSONString(event));
 

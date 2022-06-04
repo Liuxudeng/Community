@@ -70,9 +70,25 @@
         values(#{fromId},#{toId},#{conversationId},#{content},#{status},#{createTime})
     </insert>
 
+
+
     <update id="updateStatus">
         update message set status = #{status}
         where id in
+        <!--foreach用法
+            collection：要做foreach的对象，作为入参时，List<?>对象默认用list代替作为键，数组对象有array代替作为键，Map对象用map代替作为键，该参数必选；
+
+            item：循环体中的具体对象，支持属性的点路径访问，该参数必选；
+
+            index：在list和数组中,index是元素的序号，在map中，index是元素的key，该参数可选；
+
+            open：foreach代码的开始符号，一般是(和close=")"合用，该参数可选；
+
+            close：foreach代码的关闭符号，一般是)和open="("合用，该参数可选；
+
+            separator：元素之间的分隔符，例如在in()的时候，separator=","会自动在元素中间用“,“隔开，避免手动输入逗号导致sql错误，该参数可选
+
+            -->
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>

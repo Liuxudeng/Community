@@ -24,7 +24,7 @@ public class RedisConfig {
 
         /**
          * 设置value的序列化方式
-         * value可以是普通的值 也可以说序列化的列表
+         * value可以是普通的值 也可以是序列化的列表
          *
          */
 

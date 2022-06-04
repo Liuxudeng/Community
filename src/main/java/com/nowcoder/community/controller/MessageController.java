@@ -92,7 +92,7 @@ public class MessageController implements CommunityConstant {
         // 私信目标
         model.addAttribute("target", getLetterTarget(conversationId));
 
-        // 设置已读
+        // 设置已读  当访问到私信详情页时就会将未读消息变为已读
         List<Integer> ids = getLetterIds(letterList);
         if (!ids.isEmpty()) {
             messageService.readMessage(ids);
@@ -116,6 +116,7 @@ public class MessageController implements CommunityConstant {
     private List<Integer> getLetterIds(List<Message> letterList) {
         List<Integer> ids = new ArrayList<>();
 
+        //得到未读的消息数量  status=0表示未读
         if (letterList != null) {
             for (Message message : letterList) {
                 if (hostHolder.getUser().getId() == message.getToId() && message.getStatus() == 0) {
